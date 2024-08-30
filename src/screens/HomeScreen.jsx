@@ -7,7 +7,7 @@ import {
   Image,
   TextInput,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {styled} from 'nativewind';
 import {
   widthPercentageToDP as wp,
@@ -15,12 +15,32 @@ import {
 } from 'react-native-responsive-screen';
 import * as IconsOutline from 'react-native-heroicons/outline';
 import Categories from '../components/categories';
+import axios from 'axios';
 
 const StyledView = styled(View);
 const StyledScrollView = styled(ScrollView);
 const StyledText = styled(Text);
 
 const HomeScreen = () => {
+  const [allCategories, setAllCategories] = useState([]);
+  const getAllCategories = () => {
+    axios
+      .get('https://www.themealdb.com/api/json/v1/1/categories.php')
+      .then(resp => {
+        if (resp.status == 200) {
+          console.log('resp-categories=> ', resp.data.categories);
+          setAllCategories(resp.data.categories);
+        }
+      })
+      .catch(err => {
+        console.log('err->', err);
+      });
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
   return (
     <StyledView className="flex-1 bg-white">
       <StatusBar barStyle="dark" />
@@ -76,7 +96,7 @@ const HomeScreen = () => {
         </StyledView>
         {/* Categories */}
         <StyledView>
-          <Categories />
+          <Categories allCategories={allCategories} />
         </StyledView>
       </StyledScrollView>
     </StyledView>
