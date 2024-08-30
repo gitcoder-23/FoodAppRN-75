@@ -11,7 +11,11 @@ import {styled} from 'nativewind';
 const StyledView = styled(Animated.View);
 const StyledText = styled(Text);
 
-const WelcomeScreen = () => {
+type welcomeScreenType = {
+  navigation: any;
+};
+
+const WelcomeScreen = ({navigation}: welcomeScreenType) => {
   const ring1Padding = useSharedValue(0);
   const ring2Padding = useSharedValue(0);
 
@@ -24,7 +28,11 @@ const WelcomeScreen = () => {
     setTimeout(() => {
       ring2Padding.value = withSpring(ring2Padding.value + hp(5.5));
     }, 300);
-  }, [ring1Padding, ring2Padding]);
+
+    setTimeout(() => {
+      navigation.replace('Home');
+    }, 2500);
+  }, [navigation, ring1Padding, ring2Padding]);
 
   return (
     <StyledView className="flex-1 items-center justify-center space-y-10 bg-amber-500">
