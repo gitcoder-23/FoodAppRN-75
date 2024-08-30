@@ -7,18 +7,28 @@ const StyledScrollView = styled(ScrollView);
 const StyledText = styled(Text);
 
 type categoryType = {
-  allCategories: [];
+  allCategories: CategoryModel[];
 };
 
-const Categories = () => {
+const Categories = ({allCategories}: categoryType) => {
+  console.log('allCategories=>', allCategories);
+
   return (
     <StyledView>
       <StyledScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
         className="space-x-4"
-        contentContainerStyle={{paddingHorizontal: 15}}
-      />
+        contentContainerStyle={{paddingHorizontal: 15}}>
+        {allCategories &&
+          allCategories.map(data => {
+            return (
+              <StyledView>
+                <StyledText>{data.strCategory}</StyledText>
+              </StyledView>
+            );
+          })}
+      </StyledScrollView>
     </StyledView>
   );
 };
