@@ -14,6 +14,9 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 
+import Animated, {FadeInDown} from 'react-native-reanimated';
+
+const StyledMainView = styled(Animated.View);
 const StyledView = styled(View);
 const StyledScrollView = styled(ScrollView);
 const StyledText = styled(Text);
@@ -34,7 +37,7 @@ const Categories = ({
   activeCategory,
 }: categoryType) => {
   return (
-    <StyledView>
+    <StyledMainView entering={FadeInDown.duration(500).springify()}>
       <StyledScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
@@ -43,7 +46,6 @@ const Categories = ({
         {allCategories &&
           allCategories.map((catData: CategoryModel, id) => {
             let isActiveCategory = catData.strCategory == activeCategory;
-            console.log('isActiveCategory=>', isActiveCategory);
 
             let activeBtnClass = isActiveCategory
               ? 'bg-amber-400'
@@ -75,7 +77,7 @@ const Categories = ({
             );
           })}
       </StyledScrollView>
-    </StyledView>
+    </StyledMainView>
   );
 };
 

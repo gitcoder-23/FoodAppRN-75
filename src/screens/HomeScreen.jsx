@@ -16,6 +16,7 @@ import {
 import * as IconsOutline from 'react-native-heroicons/outline';
 import Categories from '../components/categories';
 import axios from 'axios';
+import {apiBaseUrl} from '../config';
 
 const StyledView = styled(View);
 const StyledScrollView = styled(ScrollView);
@@ -28,12 +29,12 @@ const HomeScreen = () => {
   const getAllCategories = () => {
     setCategoryLoading(true);
     axios
-      .get('https://www.themealdb.com/api/json/v1/1/categories.php')
+      .get(`${apiBaseUrl}/categories.php`)
       .then(resp => {
         if (resp.status == 200) {
           setCategoryLoading(false);
 
-          console.log('resp-categories=> ', resp.data.categories);
+          // console.log('resp-categories=> ', resp.data.categories);
           setAllCategories(resp.data.categories);
         }
       })
