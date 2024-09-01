@@ -17,15 +17,31 @@ import * as IconsOutline from 'react-native-heroicons/outline';
 import Categories from '../components/categories';
 import axios from 'axios';
 import {apiBaseUrl} from '../config';
+import Recipes from '../components/recipes';
 
 const StyledView = styled(View);
 const StyledScrollView = styled(ScrollView);
 const StyledText = styled(Text);
+const StyledTextInput = styled(TextInput);
 
 const HomeScreen = () => {
   const [allCategories, setAllCategories] = useState([]);
+  const [allRecipes, setAllRecipes] = useState([]);
   const [categoryLoading, setCategoryLoading] = useState(false);
+  const [receipeLoading, setRecipeLoading] = useState(false);
   const [activeCategory, setActiveCategory] = useState('Beef');
+
+  useEffect(() => {
+    getAllCategories();
+    getFilteredRecipes(activeCategory);
+  }, [activeCategory]);
+
+  const handleChangeCategory = (category: string) => {
+    getFilteredRecipes(category);
+    setActiveCategory(category);
+    setAllRecipes([]);
+  };
+
   const getAllCategories = () => {
     setCategoryLoading(true);
     axios
@@ -44,13 +60,27 @@ const HomeScreen = () => {
       });
   };
 
-  useEffect(() => {
-    getAllCategories();
-  }, []);
+  const getFilteredRecipes = (activeCategoryName: string) => {
+    setRecipeLoading(true);
+    axios
+      .get(`${apiBaseUrl}/filter.php?c=${activeCategoryName}`)
+      .then(resp => {
+        // console.log('resp=>', resp.data.meals);
+
+        if (resp.status == 200) {
+          setRecipeLoading(false);
+          setAllRecipes(resp.data.meals);
+        }
+      })
+      .catch(err => {
+        console.log('err->', err);
+        setRecipeLoading(false);
+      });
+  };
 
   return (
     <StyledView className="flex-1 bg-white">
-      <StatusBar barStyle="dark" />
+      <StatusBar barStyle={'dark-content'} />
       <StyledScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 50}}
@@ -85,7 +115,7 @@ const HomeScreen = () => {
         </StyledView>
         {/* Viw search bar */}
         <StyledView className="mx-4 flex-row items-center rounded-full bg-black/5 p-[6px]">
-          <TextInput
+          <StyledTextInput
             placeholder="Search any recipe"
             placeholderTextColor={'gray'}
             style={{fontSize: hp(1.7)}}
@@ -116,11 +146,18 @@ const HomeScreen = () => {
             <Categories
               allCategories={allCategories}
               categoryLoading={categoryLoading}
-              setActiveCategory={setActiveCategory}
+              handleChangeCategory={handleChangeCategory}
               activeCategory={activeCategory}
             />
           </StyledView>
         ) : null}
+
+        {/* Recipes */}
+        <Recipes
+          allRecipes={allRecipes}
+          receipeLoading={receipeLoading}
+          allCategories={allCategories}
+        />
       </StyledScrollView>
     </StyledView>
   );

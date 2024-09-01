@@ -26,18 +26,20 @@ const StyledTouchableOpacity = styled(TouchableOpacity);
 type categoryType = {
   allCategories: CategoryModel[];
   categoryLoading: boolean;
-  setActiveCategory: (categoryType: string) => void;
+  handleChangeCategory: (categoryType: string) => void;
   activeCategory: string;
 };
 
 const Categories = ({
   allCategories,
   categoryLoading,
-  setActiveCategory,
+  handleChangeCategory,
   activeCategory,
 }: categoryType) => {
   return (
-    <StyledMainView entering={FadeInDown.duration(500).springify()}>
+    <StyledMainView
+      entering={FadeInDown.duration(500).springify()}
+      className="mb-6">
       <StyledScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
@@ -59,7 +61,7 @@ const Categories = ({
               <StyledTouchableOpacity
                 key={id}
                 className="flex items-center space-y-1"
-                onPress={() => setActiveCategory(catData.strCategory)}>
+                onPress={() => handleChangeCategory(catData.strCategory)}>
                 <StyledView
                   className={`rounded-full p-[6px] ${activeBtnClass}`}>
                   <StyledImage
