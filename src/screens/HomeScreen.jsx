@@ -25,16 +25,20 @@ const HomeScreen = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [categoryLoading, setCategoryLoading] = useState(false);
   const getAllCategories = () => {
+    setCategoryLoading(true);
     axios
       .get('https://www.themealdb.com/api/json/v1/1/categories.php')
       .then(resp => {
         if (resp.status == 200) {
+          setCategoryLoading(false);
+
           console.log('resp-categories=> ', resp.data.categories);
           setAllCategories(resp.data.categories);
         }
       })
       .catch(err => {
         console.log('err->', err);
+        setCategoryLoading(false);
       });
   };
 
@@ -57,7 +61,6 @@ const HomeScreen = () => {
           />
           <IconsOutline.BellIcon size={hp(4)} color={'gray'} />
         </StyledView>
-
         <StyledView className="mx-4 space-y-2 mb-2">
           <StyledText className="text-neutral-600" style={{fontSize: hp(1.7)}}>
             Hello, Jack
@@ -78,7 +81,6 @@ const HomeScreen = () => {
             </StyledText>
           </StyledText>
         </StyledView>
-
         {/* Viw search bar */}
         <StyledView className="mx-4 flex-row items-center rounded-full bg-black/5 p-[6px]">
           <TextInput
@@ -96,9 +98,25 @@ const HomeScreen = () => {
           </StyledView>
         </StyledView>
         {/* Categories */}
-        <StyledView>
-          <Categories allCategories={allCategories} />
-        </StyledView>
+        {categoryLoading == true ? (
+          <StyledView className="flex-1 justify-center items-center">
+            <StyledText className="text-black text-center">
+              Loading...
+            </StyledText>
+          </StyledView>
+        ) : allCategories && allCategories.length !== 0 ? (
+          <StyledView>
+            <StyledView className="ml-4">
+              <StyledText className="text-black text-left">
+                Categories
+              </StyledText>
+            </StyledView>
+            <Categories
+              allCategories={allCategories}
+              categoryLoading={categoryLoading}
+            />
+          </StyledView>
+        ) : null}
       </StyledScrollView>
     </StyledView>
   );

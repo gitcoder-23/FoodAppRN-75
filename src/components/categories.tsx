@@ -8,9 +8,10 @@ const StyledText = styled(Text);
 
 type categoryType = {
   allCategories: CategoryModel[];
+  categoryLoading: boolean;
 };
 
-const Categories = ({allCategories}: categoryType) => {
+const Categories = ({allCategories, categoryLoading}: categoryType) => {
   console.log('allCategories=>', allCategories);
 
   return (
