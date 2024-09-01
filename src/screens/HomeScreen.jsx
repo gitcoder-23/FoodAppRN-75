@@ -24,6 +24,7 @@ const StyledText = styled(Text);
 const HomeScreen = () => {
   const [allCategories, setAllCategories] = useState([]);
   const [categoryLoading, setCategoryLoading] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('Beef');
   const getAllCategories = () => {
     setCategoryLoading(true);
     axios
@@ -106,14 +107,16 @@ const HomeScreen = () => {
           </StyledView>
         ) : allCategories && allCategories.length !== 0 ? (
           <StyledView>
-            <StyledView className="ml-4">
+            {/* <StyledView className="ml-4">
               <StyledText className="text-black text-left">
                 Categories
               </StyledText>
-            </StyledView>
+            </StyledView> */}
             <Categories
               allCategories={allCategories}
               categoryLoading={categoryLoading}
+              setActiveCategory={setActiveCategory}
+              activeCategory={activeCategory}
             />
           </StyledView>
         ) : null}
