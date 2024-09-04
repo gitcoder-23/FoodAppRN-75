@@ -19,9 +19,15 @@ type recipeType = {
   allRecipes: RecipeModel[];
   receipeLoading: boolean;
   allCategories: CategoryModel[];
+  navigation: any;
 };
 
-const Recipes = ({allRecipes, receipeLoading, allCategories}: recipeType) => {
+const Recipes = ({
+  allRecipes,
+  receipeLoading,
+  allCategories,
+  navigation,
+}: recipeType) => {
   return (
     <StyledMainView className="mx-4 space-y-3">
       <StyledText
@@ -47,7 +53,11 @@ const Recipes = ({allRecipes, receipeLoading, allCategories}: recipeType) => {
                 numColumns={2}
                 showsVerticalScrollIndicator={false}
                 renderItem={({item, i}) => (
-                  <RecipeCard recipeItem={item} recipeIndex={i} />
+                  <RecipeCard
+                    recipeItem={item}
+                    recipeIndex={i}
+                    navigation={navigation}
+                  />
                 )}
                 refreshing={receipeLoading}
                 // onRefresh={() => refetch({first: ITEM_CNT})}

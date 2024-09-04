@@ -24,7 +24,11 @@ const StyledScrollView = styled(ScrollView);
 const StyledText = styled(Text);
 const StyledTextInput = styled(TextInput);
 
-const HomeScreen = () => {
+type holeScreenType = {
+  navigation: any;
+};
+
+const HomeScreen = ({navigation}: holeScreenType) => {
   const [allCategories, setAllCategories] = useState([]);
   const [allRecipes, setAllRecipes] = useState([]);
   const [categoryLoading, setCategoryLoading] = useState(false);
@@ -158,6 +162,7 @@ const HomeScreen = () => {
           allRecipes={allRecipes}
           receipeLoading={receipeLoading}
           allCategories={allCategories}
+          navigation={navigation}
         />
       </StyledScrollView>
     </StyledView>
