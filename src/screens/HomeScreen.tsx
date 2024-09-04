@@ -83,7 +83,7 @@ const HomeScreen = () => {
       <StatusBar barStyle={'dark-content'} />
       <StyledScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 50}}
+        contentContainerStyle={{paddingBottom: 80}}
         className="space-y-6 pt-14">
         {/* Avatar & bell icon */}
         <StyledView className="mx-4 flex-row justify-between items-center nb-2">

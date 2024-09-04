@@ -7,6 +7,7 @@ import {
 } from 'react-native-responsive-screen';
 import {styled} from 'nativewind';
 import Animated, {FadeInDown} from 'react-native-reanimated';
+import CacheImage from '../cacheImage';
 
 type recipeCardType = {
   recipeItem: RecipeModel | any;
@@ -33,8 +34,24 @@ const RecipeCard = ({recipeItem, recipeIndex}: recipeCardType) => {
           paddingLeft: isBoxEven ? 0 : 8,
           paddingRight: isBoxEven ? 8 : 0,
         }}>
-        <StyledImage
-          source={{uri: recipeItem.strMealThumb}}
+        {/* <StyledImage
+          source={{
+            uri: recipeItem.strMealThumb,
+
+            // cache: 'only-if-cached',
+          }}
+          style={{
+            width: '100%',
+            height: recipeIndex % 3 === 0 ? hp(25) : hp(35),
+            borderRadius: 35,
+          }}
+          className="bg-black/5"
+        /> */}
+
+        <CacheImage
+          source={{
+            uri: recipeItem.strMealThumb,
+          }}
           style={{
             width: '100%',
             height: recipeIndex % 3 === 0 ? hp(25) : hp(35),
