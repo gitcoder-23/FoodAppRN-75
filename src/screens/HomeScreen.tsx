@@ -34,7 +34,7 @@ const HomeScreen = () => {
   useEffect(() => {
     getAllCategories();
     getFilteredRecipes(activeCategory);
-  }, [activeCategory]);
+  }, []);
 
   const handleChangeCategory = (category: string) => {
     getFilteredRecipes(category);
@@ -65,7 +65,7 @@ const HomeScreen = () => {
     axios
       .get(`${apiBaseUrl}/filter.php?c=${activeCategoryName}`)
       .then(resp => {
-        // console.log('resp=>', resp.data.meals);
+        // console.log('resp--daat=>', resp.data.meals);
 
         if (resp.status == 200) {
           setRecipeLoading(false);
@@ -130,6 +130,7 @@ const HomeScreen = () => {
           </StyledView>
         </StyledView>
         {/* Categories */}
+
         {categoryLoading == true ? (
           <StyledView className="flex-1 justify-center items-center">
             <StyledText className="text-black text-center">
