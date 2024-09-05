@@ -24,7 +24,11 @@ const StyledScrollView = styled(ScrollView);
 const StyledText = styled(Text);
 const StyledTextInput = styled(TextInput);
 
-const HomeScreen = () => {
+type holeScreenType = {
+  navigation: any;
+};
+
+const HomeScreen = ({navigation}: holeScreenType) => {
   const [allCategories, setAllCategories] = useState([]);
   const [allRecipes, setAllRecipes] = useState([]);
   const [categoryLoading, setCategoryLoading] = useState(false);
@@ -83,7 +87,7 @@ const HomeScreen = () => {
       <StatusBar barStyle={'dark-content'} />
       <StyledScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{paddingBottom: 50}}
+        contentContainerStyle={{paddingBottom: 80}}
         className="space-y-6 pt-14">
         {/* Avatar & bell icon */}
         <StyledView className="mx-4 flex-row justify-between items-center nb-2">
@@ -158,6 +162,7 @@ const HomeScreen = () => {
           allRecipes={allRecipes}
           receipeLoading={receipeLoading}
           allCategories={allCategories}
+          navigation={navigation}
         />
       </StyledScrollView>
     </StyledView>
